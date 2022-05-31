@@ -30,8 +30,8 @@ Welcome to Battleships, the naval strategy game!
 
 def new_game():
     """
-    Runs at the beggining of every new game. Prints the title, ascii battleship art and 
-    gives the player a welcome message. Executes the new player function. 
+    Runs at the beggining of every new game. Prints the title, ascii battleship art 
+    and gives the player a welcome message. Executes the new player function. 
     """
     print(INTRO)
     new_player()
@@ -45,5 +45,36 @@ def new_player():
     
     return username
 
+def new_board():
+    """
+    Prompts the user to enter the size of the board and then
+    generates the board based on the user response. 
+    Board size must be between 5-8 spaces per row/column.
+    """
+    while True:
+        board_size = input("Please enter the number of rows/columns " +  
+                           "for the boards(Must be between 5 and 8): \n")
+        if validate_board_size(board_size):
+            print(f"You have chosen a board size of {board_size}")
+            break
 
-new_game()
+    return board_size
+
+def validate_board_size(size):
+    """
+    Checks user input to make sure it is a number between 5 and 8.
+    Returns feedback to the user if they enter something that is not a number
+    or if the number is not between 5 and 8.
+    """
+    try:
+        row_size = int(size)
+        if row_size < 5 or row_size > 8:
+            raise ValueError(f"Please enter a number between 5 and 8")
+    except ValueError as e:
+        print(f"Invalid entry: {e} Please try again!\n")
+        return False
+
+    return True
+
+
+new_board()
