@@ -58,7 +58,7 @@ def new_board():
             print(f"You have chosen a board size of {board_size}")
             break
 
-    return board_size
+    return int(board_size)
 
 def validate_board_size(size):
     """
@@ -76,5 +76,13 @@ def validate_board_size(size):
 
     return True
 
+def create_board(board_size):
+    """
+    Generates the battleships board based on size provided.
+    Creates a 2D matrix with equal size columns and rows.
+    """
+    for x in range(board_size):
+        print("*  " * board_size)
 
-new_board()
+board_size = new_board()
+create_board(board_size)
