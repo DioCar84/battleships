@@ -1,4 +1,5 @@
 from random import randint
+from pprint import pprint
 
 # https://www.asciiart.eu/vehicles/navy - ascii battleship
 #https://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=Battleships - ascii title
@@ -84,20 +85,41 @@ def create_board(size):
     """
     Generates the battleships board based on size provided.
     Creates a 2D matrix with equal size columns and rows.
+    Stores the board elements in a list of lists.
     """
-    for x in range(size):
-        print("*  " * size)
+    board = [["*" for x in range(size)] for y in range(size)]
+
+    return board
 
 def generate_ship_location(size):
     """
     Randomly generates location for 5 ships based on the size of the board.
-    Stores the ship locations in a Set to ensure there are no duplicate locations.
+    Stores the ship locations in a Set to ensure there are 
+    no duplicate locations. Finally, converts to set into a list 
+    for easier access to the elements.
     """
     ship_pos = set()
     for ship in range(5):
         nums = (randint(0, size - 1), randint(0, size - 1))
         ship_pos.add(nums)
+    
+    ship_pos_list = list(ship_pos)
 
-    return ship_pos
+    return ship_pos_list
 
-print(generate_ship_location(6))
+def place_ships_on_board(board, ships):
+    """
+    Places the ships on the board based on the ship positions.
+    Replaces the '*' with a '@' to represent a ship.
+    """
+    for ship in ships:
+        board[ship[0]][ship[1]] = "@"
+
+    return board
+
+ship_pos = generate_ship_location(5)
+pprint(ship_pos)
+board = create_board(5)
+pprint(board)
+final_board = place_ships_on_board(board, ship_pos)
+pprint(final_board)
