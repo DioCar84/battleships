@@ -1,3 +1,5 @@
+from random import randint
+
 # https://www.asciiart.eu/vehicles/navy - ascii battleship
 #https://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=Battleships - ascii title
 
@@ -30,8 +32,10 @@ Welcome to Battleships, the naval strategy game!
 
 def new_game():
     """
-    Runs at the beggining of every new game. Prints the title, ascii battleship art 
-    and gives the player a welcome message. Executes the new player function. 
+    Runs at the beggining of every new game. 
+    Prints the title, ascii battleship
+    art and gives the player a welcome message. 
+    Executes the new player function. 
     """
     print(INTRO)
     new_player()
@@ -76,13 +80,24 @@ def validate_board_size(size):
 
     return True
 
-def create_board(board_size):
+def create_board(size):
     """
     Generates the battleships board based on size provided.
     Creates a 2D matrix with equal size columns and rows.
     """
-    for x in range(board_size):
-        print("*  " * board_size)
+    for x in range(size):
+        print("*  " * size)
 
-board_size = new_board()
-create_board(board_size)
+def generate_ship_location(size):
+    """
+    Randomly generates location for 5 ships based on the size of the board.
+    Stores the ship locations in a Set to ensure there are no duplicate locations.
+    """
+    ship_pos = set()
+    for ship in range(5):
+        nums = (randint(0, size - 1), randint(0, size - 1))
+        ship_pos.add(nums)
+
+    return ship_pos
+
+print(generate_ship_location(6))
