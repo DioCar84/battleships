@@ -39,7 +39,6 @@ def new_game():
     Executes the new player function. 
     """
     print(INTRO)
-    new_player()
 
 
 def new_player():
@@ -99,7 +98,7 @@ def generate_ship_location(size):
     for easier access to the elements.
     """
     ship_pos = set()
-    for ship in range(5):
+    while len(ship_pos) < 5:
         nums = (randint(0, size - 1), randint(0, size - 1))
         ship_pos.add(nums)
     
@@ -117,9 +116,9 @@ def place_ships_on_board(board, ships):
 
     return board
 
-ship_pos = generate_ship_location(5)
-pprint(ship_pos)
-board = create_board(5)
-pprint(board)
-final_board = place_ships_on_board(board, ship_pos)
-pprint(final_board)
+def check_answer(row, column, board):
+    """
+    Checks the board to see if the row and column provided correspond
+    to a ship location or an empty position(water). Returns feedback to
+    the player to advise if the input provided is a hit or a miss.
+    """
