@@ -116,9 +116,33 @@ def place_ships_on_board(board, ships):
 
     return board
 
+def get_user_answer():
+    """
+    Prompts user to input a row/column pair and stores the response
+    """
+    row = input("Please choose a Row: ")
+    column = input("Please choose a Column: ")
+    response = [int(row), int(column)]
+
+    return response
+
+def generate_pc_answer(size):
+    """
+    Creates a random set of coordinates as the computer's guess
+    """
+    random_guess = [randint(0, size - 1), randint(0, size - 1)]
+
+    return random_guess
+
+
 def check_answer(row, column, board):
     """
     Checks the board to see if the row and column provided correspond
     to a ship location or an empty position(water). Returns feedback to
     the player to advise if the input provided is a hit or a miss.
     """
+
+user_guess = get_user_answer()
+print(user_guess)
+pc_guess = generate_pc_answer(6)
+print(pc_guess)
