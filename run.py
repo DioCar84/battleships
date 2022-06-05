@@ -33,7 +33,7 @@ Welcome to Battleships, the naval strategy game!
 class Player:
     """
     Player class. Stores the username and score for each Player object.
-    Has a methods for incrementing the Player's score.
+    Has methods for incrementing the Player's score and creating new usernames.
     """
 
     def __init__(self, username, score):
@@ -46,6 +46,71 @@ class Player:
         """
         self.score += 1
 
+    def new_player(self):
+        """
+        Prompts the player to enter a username and returns it.
+        """
+        username = input("Please enter your username:\n")
+        
+        self.username = username
+
+class Board:
+    """
+    """
+
+    def __init__(self, player, size, ships):
+        self.player = player
+        self.size = size
+        self.ships = ships
+
+    def new_board(self):
+        """
+        Prompts the user to enter the size of the board and then
+        generates the board based on the user response. 
+        Board size must be between 5-8 spaces per row/column.
+        """
+        while True:
+            board_size = input("Please enter the number of rows/columns " +  
+                            "for the boards(Must be between 5 and 8): \n")
+            if self.validate_board_size(board_size):
+                print(f"You have chosen a board size of {board_size}")
+                break
+
+        self.size = int(board_size)
+
+    def validate_board_size(self, size):
+        """
+        Checks user input to make sure it is a number between 5 and 8.
+        Returns feedback to the user if they enter something that's not
+        a number or if the number is not between 5 and 8.
+        """
+        try:
+            row_size = int(size)
+            if row_size < 5 or row_size > 8:
+                print("Please enter a number between 5 and 8")
+                return False
+        except:
+            print("Invalid entry: You must enter a whole number. Please try again!")
+            return False
+
+        return True
+
+    def generate_ship_location(self):
+        """
+        Randomly generates location for 5 ships based on the size of the board.
+        Stores the ship locations in a Set to ensure there are 
+        no duplicate locations. Finally, converts to set into a list 
+        for easier access to the elements.
+        """
+        ship_pos = set()
+        while len(ship_pos) < 5:
+            nums = (randint(0, self.size - 1), randint(0, self.size - 1))
+            ship_pos.add(nums)
+        
+        ship_pos_list = list(ship_pos)
+
+        self.ships = ship_pos_list
+
 def new_game():
     """
     Runs at the beggining of every new game. 
@@ -54,46 +119,6 @@ def new_game():
     Executes the new player function. 
     """
     print(INTRO)
-
-def new_player():
-        """
-        Prompts the player to enter a username and returns it.
-        """
-        username = input("Please enter your username:\n")
-        
-        return username
-
-def new_board():
-    """
-    Prompts the user to enter the size of the board and then
-    generates the board based on the user response. 
-    Board size must be between 5-8 spaces per row/column.
-    """
-    while True:
-        board_size = input("Please enter the number of rows/columns " +  
-                           "for the boards(Must be between 5 and 8): \n")
-        if validate_board_size(board_size):
-            print(f"You have chosen a board size of {board_size}")
-            break
-
-    return int(board_size)
-
-def validate_board_size(size):
-    """
-    Checks user input to make sure it is a number between 5 and 8.
-    Returns feedback to the user if they enter something that is not a number
-    or if the number is not between 5 and 8.
-    """
-    try:
-        row_size = int(size)
-        if row_size < 5 or row_size > 8:
-            print("Please enter a number between 5 and 8")
-            return False
-    except:
-        print("Invalid entry: You must enter a whole number. Please try again!")
-        return False
-
-    return True
 
 def create_board(size):
     """
@@ -104,22 +129,6 @@ def create_board(size):
     board = [["*" for x in range(size)] for y in range(size)]
 
     return board
-
-def generate_ship_location(size):
-    """
-    Randomly generates location for 5 ships based on the size of the board.
-    Stores the ship locations in a Set to ensure there are 
-    no duplicate locations. Finally, converts to set into a list 
-    for easier access to the elements.
-    """
-    ship_pos = set()
-    while len(ship_pos) < 5:
-        nums = (randint(0, size - 1), randint(0, size - 1))
-        ship_pos.add(nums)
-    
-    ship_pos_list = list(ship_pos)
-
-    return ship_pos_list
 
 def place_ships_on_board(board, ships):
     """
@@ -173,7 +182,6 @@ def generate_pc_answer(size):
 
     return random_guess
 
-
 def check_answer(row, column, board):
     """
     Checks the board to see if the row and column provided correspond
@@ -181,5 +189,9 @@ def check_answer(row, column, board):
     the player to advise if the input provided is a hit or a miss.
     """
 
-new_player = Player(new_player(), 0)
-print(f"Your username is: {new_player.username}")
+new_board = Board(new_player(), 0, [])
+new_board.new_board()
+new_board.generate_ship_location()
+print(new_board.player)
+print(new_board.size)
+print(new_board.ships)
