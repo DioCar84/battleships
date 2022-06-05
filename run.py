@@ -175,6 +175,20 @@ class Board:
         for ship in self.ships:
             self.display[ship[0]][ship[1]] = "@"
 
+    def check_answer(self, guess, ships):
+        """
+        Checks the board to see if the row and column provided correspond
+        to a ship location or an empty position(water). Returns feedback to
+        the player to advise if the input provided is a hit or a miss.
+        """
+
+        for x, y in ships:
+            if guess == [x, y]:
+                print(f"{self.player} scores a direct hit!!!")
+                return True
+
+        print(f"{self.player} hits the water...")
+
 def new_game():
     """
     Runs at the beggining of every new game. 
@@ -183,13 +197,6 @@ def new_game():
     Executes the new player function. 
     """
     print(INTRO)
-
-def check_answer(row, column, board):
-    """
-    Checks the board to see if the row and column provided correspond
-    to a ship location or an empty position(water). Returns feedback to
-    the player to advise if the input provided is a hit or a miss.
-    """
 
 first_player = Player("", 0, [])
 first_player.new_player()
@@ -215,3 +222,6 @@ pprint(second_board.display)
 
 first_player.get_player_answer(board_size)
 second_player.get_player_answer(board_size)
+
+new_board.check_answer(first_player.guess, second_board.ships)
+second_board.check_answer(second_player.guess, new_board.ships)
