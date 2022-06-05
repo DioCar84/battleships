@@ -30,6 +30,21 @@ INTRO = """
 Welcome to Battleships, the naval strategy game!
 
         """
+class Player:
+    """
+    Player class. Stores the username and score for each Player object.
+    Has a methods for incrementing the Player's score.
+    """
+
+    def __init__(self, username, score):
+        self.username = username
+        self.score = score
+
+    def increment_score(self):
+        """
+        Increments the Player's score by 1.
+        """
+        self.score += 1
 
 def new_game():
     """
@@ -40,14 +55,13 @@ def new_game():
     """
     print(INTRO)
 
-
 def new_player():
-    """
-    Prompts the player to enter a username and returns it.
-    """
-    username = input("Please enter your username:\n")
-    
-    return username
+        """
+        Prompts the player to enter a username and returns it.
+        """
+        username = input("Please enter your username:\n")
+        
+        return username
 
 def new_board():
     """
@@ -167,6 +181,5 @@ def check_answer(row, column, board):
     the player to advise if the input provided is a hit or a miss.
     """
 
-player = new_player()
-board = new_board()
-print(get_user_answer(player, board))
+new_player = Player(new_player(), 0)
+print(f"Your username is: {new_player.username}")
