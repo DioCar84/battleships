@@ -73,9 +73,10 @@ def validate_board_size(size):
     try:
         row_size = int(size)
         if row_size < 5 or row_size > 8:
-            raise ValueError(f"Please enter a number between 5 and 8")
-    except ValueError as e:
-        print(f"Invalid entry: {e} Please try again!\n")
+            print("Please enter a number between 5 and 8")
+            return False
+    except:
+        print("Invalid entry: You must enter a whole number. Please try again!")
         return False
 
     return True
@@ -116,15 +117,39 @@ def place_ships_on_board(board, ships):
 
     return board
 
-def get_user_answer():
+def get_user_answer(player, size):
     """
     Prompts user to input a row/column pair and stores the response
     """
-    row = input("Please choose a Row: ")
-    column = input("Please choose a Column: ")
+    while True:
+        row = input("Please choose a Row:\n")
+        if validate_user_answer(size, row):
+            column = input("Please choose a Column:\n")
+            if validate_user_answer(size, column):
+                print(f"{player} guessed: ({row}, {column})")
+                break
+
     response = [int(row), int(column)]
 
     return response
+    
+def validate_user_answer(size, response):
+    """
+    Checks user input to make sure it is a valid number within the board size .
+    Returns feedback to the user if they enter something that is not a number
+    or if the number is not a valid row or column within the board.
+    """
+    
+    try:
+        response = int(response)
+        if response < 0 or response > size - 1:
+            print(f"Please enter a number between 0 and {size - 1}!")
+            return False
+    except:
+        print("Invalid entry: You must enter a whole number. Please try again!")
+        return False
+
+    return True
 
 def generate_pc_answer(size):
     """
@@ -142,7 +167,6 @@ def check_answer(row, column, board):
     the player to advise if the input provided is a hit or a miss.
     """
 
-user_guess = get_user_answer()
-print(user_guess)
-pc_guess = generate_pc_answer(6)
-print(pc_guess)
+player = new_player()
+board = new_board()
+print(get_user_answer(player, board))
