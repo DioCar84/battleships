@@ -36,9 +36,10 @@ class Player:
     Has methods for incrementing the Player's score and creating new usernames.
     """
 
-    def __init__(self, username, score):
+    def __init__(self, username, score, guess):
         self.username = username
         self.score = score
+        self.guess = guess
 
     def increment_score(self):
         """
@@ -54,14 +55,58 @@ class Player:
         
         self.username = username
 
+    def get_player_answer(self, size):
+        """
+        Checks to see if the user or the PC are guessing.
+        Creates a random set of coordinates as the computer's guess.
+        Prompts user to input a row/column pair and stores the response.
+        """
+
+        if self.username == "Computer":
+            row = randint(0, size - 1)
+            column = randint(0, size - 1)
+            response = [row, column]
+            self.guess = response
+        else:
+            while True:
+                row = input("Please choose a Row:\n")
+                if self.validate_player_answer(size, row):
+                    column = input("Please choose a Column:\n")
+                    if self.validate_player_answer(size, column):
+                        break
+            response = [int(row), int(column)]
+            self.guess = response
+
+        print(f"{self.username} guessed: ({row}, {column})")
+
+    def validate_player_answer(self, size, response):
+        """
+        Checks user input to make sure it's a valid number within the 
+        board size. Returns feedback to the user if they enter something 
+        that's not a number or if the number is not a valid row or 
+        column within the board.
+        """
+        
+        try:
+            response = int(response)
+            if response < 0 or response > size - 1:
+                print(f"Please enter a number between 0 and {size - 1}!")
+                return False
+        except:
+            print("Invalid entry: You must enter a whole number. Please try again!")
+            return False
+
+        return True
+
 class Board:
     """
     """
 
-    def __init__(self, player, size, ships):
+    def __init__(self, player, size, ships, display):
         self.player = player
         self.size = size
         self.ships = ships
+        self.display = display
 
     def new_board(self):
         """
@@ -77,6 +122,7 @@ class Board:
                 break
 
         self.size = int(board_size)
+        return int(board_size)
 
     def validate_board_size(self, size):
         """
@@ -111,6 +157,24 @@ class Board:
 
         self.ships = ship_pos_list
 
+    def create_board(self):
+        """
+        Generates the battleships board based on size provided.
+        Creates a 2D matrix with equal size columns and rows.
+        Stores the board elements in a list of lists.
+        """
+        board = [["*" for x in range(self.size)] for y in range(self.size)]
+
+        self.display = board
+
+    def place_ships_on_board(self):
+        """
+        Places the ships on the board based on the ship positions.
+        Replaces the '*' with a '@' to represent a ship.
+        """
+        for ship in self.ships:
+            self.display[ship[0]][ship[1]] = "@"
+
 def new_game():
     """
     Runs at the beggining of every new game. 
@@ -120,68 +184,6 @@ def new_game():
     """
     print(INTRO)
 
-def create_board(size):
-    """
-    Generates the battleships board based on size provided.
-    Creates a 2D matrix with equal size columns and rows.
-    Stores the board elements in a list of lists.
-    """
-    board = [["*" for x in range(size)] for y in range(size)]
-
-    return board
-
-def place_ships_on_board(board, ships):
-    """
-    Places the ships on the board based on the ship positions.
-    Replaces the '*' with a '@' to represent a ship.
-    """
-    for ship in ships:
-        board[ship[0]][ship[1]] = "@"
-
-    return board
-
-def get_user_answer(player, size):
-    """
-    Prompts user to input a row/column pair and stores the response
-    """
-    while True:
-        row = input("Please choose a Row:\n")
-        if validate_user_answer(size, row):
-            column = input("Please choose a Column:\n")
-            if validate_user_answer(size, column):
-                print(f"{player} guessed: ({row}, {column})")
-                break
-
-    response = [int(row), int(column)]
-
-    return response
-    
-def validate_user_answer(size, response):
-    """
-    Checks user input to make sure it is a valid number within the board size .
-    Returns feedback to the user if they enter something that is not a number
-    or if the number is not a valid row or column within the board.
-    """
-    
-    try:
-        response = int(response)
-        if response < 0 or response > size - 1:
-            print(f"Please enter a number between 0 and {size - 1}!")
-            return False
-    except:
-        print("Invalid entry: You must enter a whole number. Please try again!")
-        return False
-
-    return True
-
-def generate_pc_answer(size):
-    """
-    Creates a random set of coordinates as the computer's guess
-    """
-    random_guess = [randint(0, size - 1), randint(0, size - 1)]
-
-    return random_guess
-
 def check_answer(row, column, board):
     """
     Checks the board to see if the row and column provided correspond
@@ -189,9 +191,27 @@ def check_answer(row, column, board):
     the player to advise if the input provided is a hit or a miss.
     """
 
-new_board = Board(new_player(), 0, [])
-new_board.new_board()
+first_player = Player("", 0, [])
+first_player.new_player()
+second_player = Player("Computer", 0, [])
+
+new_board = Board(first_player.username, 0, [], [])
+board_size = new_board.new_board()
 new_board.generate_ship_location()
-print(new_board.player)
-print(new_board.size)
+new_board.create_board()
+new_board.place_ships_on_board()
+
+second_board = Board(second_player.username, board_size, [], [])
+second_board.generate_ship_location()
+second_board.create_board()
+
+print(first_player.username)
 print(new_board.ships)
+pprint(new_board.display)
+
+print(second_player.username)
+print(second_board.ships)
+pprint(second_board.display)
+
+first_player.get_player_answer(board_size)
+second_player.get_player_answer(board_size)
