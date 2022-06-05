@@ -98,6 +98,23 @@ class Player:
 
         return True
 
+    def check_answer(self, guess, ships, display):
+        """
+        Checks the board to see if the row and column provided correspond
+        to a ship location or an empty position(water). Returns feedback to
+        the player to advise if the input provided is a hit or a miss.
+        Alters the opponent's display to reflect the result.
+        """
+
+        for x, y in ships:
+            if guess == [x, y]:
+                print(f"{self.username} scores a direct hit!!!")
+                display[x][y] = "*"
+                return True
+
+        display[guess[0]][guess[1]] = "x"
+        print(f"{self.username} hits the water...")
+
 class Board:
     """
     """
@@ -163,7 +180,7 @@ class Board:
         Creates a 2D matrix with equal size columns and rows.
         Stores the board elements in a list of lists.
         """
-        board = [["*" for x in range(self.size)] for y in range(self.size)]
+        board = [[". " for x in range(self.size)] for y in range(self.size)]
 
         self.display = board
 
@@ -173,21 +190,14 @@ class Board:
         Replaces the '*' with a '@' to represent a ship.
         """
         for ship in self.ships:
-            self.display[ship[0]][ship[1]] = "@"
+            self.display[ship[0]][ship[1]] = "@ "
 
-    def check_answer(self, guess, ships):
+    def print_board(self):
         """
-        Checks the board to see if the row and column provided correspond
-        to a ship location or an empty position(water). Returns feedback to
-        the player to advise if the input provided is a hit or a miss.
+        Prints the game board to the terminal
         """
-
-        for x, y in ships:
-            if guess == [x, y]:
-                print(f"{self.player} scores a direct hit!!!")
-                return True
-
-        print(f"{self.player} hits the water...")
+        for row in self.display:
+            print(*row)
 
 def new_game():
     """
@@ -214,14 +224,19 @@ second_board.create_board()
 
 print(first_player.username)
 print(new_board.ships)
-pprint(new_board.display)
+new_board.print_board()
 
 print(second_player.username)
 print(second_board.ships)
-pprint(second_board.display)
+second_board.print_board()
 
 first_player.get_player_answer(board_size)
 second_player.get_player_answer(board_size)
+print(first_player.guess)
+print(second_player.guess)
 
-new_board.check_answer(first_player.guess, second_board.ships)
-second_board.check_answer(second_player.guess, new_board.ships)
+first_player.check_answer(first_player.guess, second_board.ships, second_board.display)
+second_player.check_answer(second_player.guess, new_board.ships, new_board.display)
+
+new_board.print_board()
+second_board.print_board()
