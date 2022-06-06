@@ -36,10 +36,11 @@ class Player:
     Has methods for incrementing the Player's score and creating new usernames.
     """
 
-    def __init__(self, username, score, guess):
+    def __init__(self, username, score, guess, guesses_made):
         self.username = username
         self.score = score
         self.guess = guess
+        self.guesses_made = guesses_made
 
     def increment_score(self):
         """
@@ -57,9 +58,9 @@ class Player:
 
     def get_player_answer(self, size):
         """
-        Checks to see if the user or the PC are guessing.
+        Checks to see if it's the user or the PC guessing.
         Creates a random set of coordinates as the computer's guess.
-        Prompts user to input a row/column pair and stores the response.
+        Prompts user to input a row/column pair and stores the response. 
         """
 
         if self.username == "Computer":
@@ -77,7 +78,7 @@ class Player:
             response = [int(row), int(column)]
             self.guess = response
 
-        print(f"{self.username} guessed: ({row}, {column})")
+        return response
 
     def validate_player_answer(self, size, response):
         """
@@ -98,22 +99,33 @@ class Player:
 
         return True
 
-    def check_answer(self, guess, ships, display):
+    def check_answer(self, size, guess, ships, display):
         """
-        Checks the board to see if the row and column provided correspond
-        to a ship location or an empty position(water). Returns feedback to
-        the player to advise if the input provided is a hit or a miss.
-        Alters the opponent's display to reflect the result.
+        Checks to see if the guess enterred has already been made before,
+        if so calls the get_player_answer function again until a new guess
+        has been enterred. Checks the board to see if the row and column
+        provided correspond to a ship location or an empty position(water).
+        Returns feedback to the player to advise if the input provided is a
+        hit or a miss. Alters the opponent's display to reflect the result.
         """
 
-        for x, y in ships:
-            if guess == [x, y]:
-                print(f"{self.username} scores a direct hit!!!")
-                display[x][y] = "*"
-                return True
+        if guess in self.guesses_made:
+            if self.username != "Computer":
+                print("You have already tried those coordinates, please choose new ones!")
+            new_guess = self.get_player_answer(size)
+            self.check_answer(size, new_guess, ships, display)
+        else:
+            self.guesses_made.append(guess)
+            for x, y in ships:
+                if guess == [x, y]:
+                    print(f"{self.username} guessed: ({x}, {y})")
+                    print(f"{self.username} scores a direct hit!!!")
+                    display[x][y] = "*"
+                    return True
 
-        display[guess[0]][guess[1]] = "x"
-        print(f"{self.username} hits the water...")
+            display[guess[0]][guess[1]] = "x"
+            print(f"{self.username} guessed: ({x}, {y})")
+            print(f"{self.username} hits the water...")
 
 class Board:
     """
@@ -208,9 +220,9 @@ def new_game():
     """
     print(INTRO)
 
-first_player = Player("", 0, [])
+first_player = Player("", 0, [], [])
 first_player.new_player()
-second_player = Player("Computer", 0, [])
+second_player = Player("Computer", 0, [], [])
 
 new_board = Board(first_player.username, 0, [], [])
 board_size = new_board.new_board()
@@ -235,8 +247,22 @@ second_player.get_player_answer(board_size)
 print(first_player.guess)
 print(second_player.guess)
 
-first_player.check_answer(first_player.guess, second_board.ships, second_board.display)
-second_player.check_answer(second_player.guess, new_board.ships, new_board.display)
+first_player.check_answer(board_size, first_player.guess, second_board.ships, second_board.display)
+second_player.check_answer(board_size, second_player.guess, new_board.ships, new_board.display)
 
 new_board.print_board()
 second_board.print_board()
+
+first_player.get_player_answer(board_size)
+second_player.get_player_answer(board_size)
+print(first_player.guess)
+print(second_player.guess)
+
+first_player.check_answer(board_size, first_player.guess, second_board.ships, second_board.display)
+second_player.check_answer(board_size, second_player.guess, new_board.ships, new_board.display)
+
+new_board.print_board()
+second_board.print_board()
+
+print(first_player.guesses_made)
+print(second_player.guesses_made)
