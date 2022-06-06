@@ -120,10 +120,11 @@ class Player:
                 if guess == [x, y]:
                     print(f"{self.username} guessed: ({x}, {y})")
                     print(f"{self.username} scores a direct hit!!!")
-                    display[x][y] = "*"
+                    display[x][y] = "x  "
+                    self.increment_score()
                     return True
 
-            display[guess[0]][guess[1]] = "x"
+            display[guess[0]][guess[1]] = "o  "
             print(f"{self.username} guessed: ({x}, {y})")
             print(f"{self.username} hits the water...")
 
@@ -192,7 +193,7 @@ class Board:
         Creates a 2D matrix with equal size columns and rows.
         Stores the board elements in a list of lists.
         """
-        board = [[". " for x in range(self.size)] for y in range(self.size)]
+        board = [["-  " for x in range(self.size)] for y in range(self.size)]
 
         self.display = board
 
@@ -202,14 +203,18 @@ class Board:
         Replaces the '*' with a '@' to represent a ship.
         """
         for ship in self.ships:
-            self.display[ship[0]][ship[1]] = "@ "
+            self.display[ship[0]][ship[1]] = "@  "
 
-    def print_board(self):
+    def print_board(self, score):
         """
-        Prints the game board to the terminal
+        Prints the board owner's name and score.
+        Will also print the game board to the terminal.
         """
+        print(f"{self.player}'s Board. Score: {score}")
+        print("********************")
         for row in self.display:
             print(*row)
+        print("********************")    
 
 def new_game():
     """
@@ -236,11 +241,11 @@ second_board.create_board()
 
 print(first_player.username)
 print(new_board.ships)
-new_board.print_board()
+new_board.print_board(first_player.score)
 
 print(second_player.username)
 print(second_board.ships)
-second_board.print_board()
+second_board.print_board(second_player.score)
 
 first_player.get_player_answer(board_size)
 second_player.get_player_answer(board_size)
@@ -250,8 +255,8 @@ print(second_player.guess)
 first_player.check_answer(board_size, first_player.guess, second_board.ships, second_board.display)
 second_player.check_answer(board_size, second_player.guess, new_board.ships, new_board.display)
 
-new_board.print_board()
-second_board.print_board()
+new_board.print_board(first_player.score)
+second_board.print_board(second_player.score)
 
 first_player.get_player_answer(board_size)
 second_player.get_player_answer(board_size)
@@ -261,8 +266,8 @@ print(second_player.guess)
 first_player.check_answer(board_size, first_player.guess, second_board.ships, second_board.display)
 second_player.check_answer(board_size, second_player.guess, new_board.ships, new_board.display)
 
-new_board.print_board()
-second_board.print_board()
+new_board.print_board(first_player.score)
+second_board.print_board(second_player.score)
 
 print(first_player.guesses_made)
 print(second_player.guesses_made)
