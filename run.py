@@ -28,7 +28,7 @@ INTRO = """
 
 
 Welcome to Battleships, the naval strategy game!
-
+The top left corner’s coordinates are (0, 0).
         """
 class Player:
     """
@@ -225,49 +225,21 @@ def new_game():
     """
     print(INTRO)
 
-first_player = Player("", 0, [], [])
-first_player.new_player()
-second_player = Player("Computer", 0, [], [])
+def main():
+    """
+    The main function, used to execute the program.
+    """
+    new_game()
+    player1 = Player("", 0, [], [])
+    player1.new_player()
+    player2 = Player("Computer", 0, [], [])
+    board1 = Board(player1.username, 0, [], [])
+    board_size = board1.new_board()
+    board2 = Board(player2.username, board_size, [], [])
+    board1.generate_ship_location()
+    board2.generate_ship_location()
+    print(board1.ships)
+    print(board2.ships)
 
-new_board = Board(first_player.username, 0, [], [])
-board_size = new_board.new_board()
-new_board.generate_ship_location()
-new_board.create_board()
-new_board.place_ships_on_board()
 
-second_board = Board(second_player.username, board_size, [], [])
-second_board.generate_ship_location()
-second_board.create_board()
-
-print(first_player.username)
-print(new_board.ships)
-new_board.print_board(first_player.score)
-
-print(second_player.username)
-print(second_board.ships)
-second_board.print_board(second_player.score)
-
-first_player.get_player_answer(board_size)
-second_player.get_player_answer(board_size)
-print(first_player.guess)
-print(second_player.guess)
-
-first_player.check_answer(board_size, first_player.guess, second_board.ships, second_board.display)
-second_player.check_answer(board_size, second_player.guess, new_board.ships, new_board.display)
-
-new_board.print_board(first_player.score)
-second_board.print_board(second_player.score)
-
-first_player.get_player_answer(board_size)
-second_player.get_player_answer(board_size)
-print(first_player.guess)
-print(second_player.guess)
-
-first_player.check_answer(board_size, first_player.guess, second_board.ships, second_board.display)
-second_player.check_answer(board_size, second_player.guess, new_board.ships, new_board.display)
-
-new_board.print_board(first_player.score)
-second_board.print_board(second_player.score)
-
-print(first_player.guesses_made)
-print(second_player.guesses_made)
+main()
