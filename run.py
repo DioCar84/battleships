@@ -225,6 +225,20 @@ def new_game():
     """
     print(INTRO)
 
+def continue_game(score1, score2):
+    """
+    Checks both player's score to see if any has scored 5 hits.
+    Prompts the user to decide wether they wish to continue the game.
+    """
+    if score1 < 5 and score2 < 5:
+        keep_playing = input("Do you want to keep playing?\n" + 
+        "Enter q to quit or any other key to continue: ")
+        if keep_playing.lower() == "n":
+            return False
+        return True
+
+    return False
+
 def main():
     """
     The main function, used to execute the program.
