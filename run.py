@@ -251,9 +251,15 @@ def main():
     board_size = board1.new_board()
     board2 = Board(player2.username, board_size, [], [])
     board1.generate_ship_location()
+    board1.place_ships_on_board()
     board2.generate_ship_location()
-    print(board1.ships)
-    print(board2.ships)
 
-
+    while continue_game(player1.score, player2.score):
+        board1.print_board(player1.score)
+        board2.print_board(player2.score)
+        player1.get_player_answer(board_size)
+        player1.check_answer(board_size, player1.guess, board2.ships, board2.display)
+        player2.get_player_answer(board_size)
+        player2.check_answer(board_size, player2.guess, board1.ships, board1.display)
+    
 main()
