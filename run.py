@@ -115,7 +115,8 @@ class Player:
 
         if guess in self.guesses_made:
             if self.username != "Computer":
-                print("You have already tried those coordinates, please choose new ones!")
+                print("You have already tried those coordinates," +
+                    " please choose new ones!")
             new_guess = self.get_player_answer(size)
             self.check_answer(size, new_guess, ships, display)
         else:
@@ -123,14 +124,14 @@ class Player:
             for x, y in ships:
                 if guess == [x, y]:
                     print(f"{self.username} guessed: ({x}, {y})")
-                    print(f"{self.username} scores a direct hit!!!")
+                    print(f"{self.username} scores a direct hit!!!\n")
                     display[x][y] = "x  "
                     self.increment_score()
                     return True
 
             display[guess[0]][guess[1]] = "o  "
             print(f"{self.username} guessed: ({x}, {y})")
-            print(f"{self.username} hits the water...")
+            print(f"{self.username} hits the water...\n")
 
 class Board:
     """
@@ -150,7 +151,7 @@ class Board:
         """
         while True:
             board_size = input("Please enter the number of rows/columns " +  
-                            "for the boards(Must be between 5 and 8): \n")
+                            "for the boards(Must be between 5 and 8): ")
             if self.validate_board_size(board_size):
                 print(f"You have chosen a board size of {board_size}")
                 break
@@ -214,7 +215,7 @@ class Board:
         Prints the board owner's name and score.
         Will also print the game board to the terminal.
         """
-        print(f"{self.player}'s Board. Score: {score}")
+        print(f"\n{self.player}'s Board. Score: {score}")
         print("********************")
         for row in self.display:
             print(*row)
@@ -251,18 +252,23 @@ def game_loop(player1, player2, board1, board2):
         board1.ships,
         board1.display)
 
-def continue_game(score1, score2):
+def continue_game(player1, player2):
     """
     Checks both player's score to see if any has scored 5 hits.
     Prompts the user to decide wether they wish to continue the game.
     """
-    if score1 < 5 and score2 < 5:
+    if player1.score < 5 and player2.score < 5:
         keep_playing = input("Do you want to keep playing?\n" + 
         "Enter q to quit or any other key to continue: ")
         if keep_playing.lower() == "q":
             return False
         return True
-
+    print(f"""
+The game has ended. The final score is:
+{player1.username} sank {player1.score } ship(s).
+{player2.username} sank {player2.score } ship(s).
+Thanks for playing!
+        """)
     return False
 
 def main():
@@ -283,7 +289,7 @@ def main():
     board2.create_board()
     board2.generate_ship_location()
     game_loop(player1, player2, board1, board2)
-    while continue_game(player1.score, player2.score):
+    while continue_game(player1, player2):
         game_loop(player1, player2, board1, board2)
     
 main()
