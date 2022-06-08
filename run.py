@@ -51,8 +51,12 @@ class Player:
     def new_player(self):
         """
         Prompts the player to enter a username and returns it.
+        Has validation method to ensure the name is not blank.
         """
-        username = input("Please enter your username:\n")
+        username = input("Please enter your username: ")
+        while username.isspace() or not username:
+            print("Username cannot be blank, please choose a valid option!\n")
+            username = input("Please enter your username: ")
         
         self.username = username
 
@@ -262,4 +266,8 @@ def main():
         player2.get_player_answer(board_size)
         player2.check_answer(board_size, player2.guess, board1.ships, board1.display)
     
-main()
+# main()
+
+player3 = Player("", 0, [], [])
+player3.new_player()
+print(player3.username)
