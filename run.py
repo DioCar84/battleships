@@ -229,6 +229,28 @@ def new_game():
     """
     print(INTRO)
 
+def game_loop(player1, player2, board1, board2):
+    """
+    Part of the game that must repeat until the game ends or player quits.
+    Prints the two boards, asks the user to input a guess,
+    verifies that answer and provides feedback.
+    """
+    board1.print_board(player1.score)
+    board2.print_board(player2.score)
+    print(board2.ships)
+    player1.get_player_answer(board1.size)
+    player1.check_answer(
+        board1.size,
+        player1.guess,
+        board2.ships,
+        board2.display)
+    player2.get_player_answer(board2.size)
+    player2.check_answer(
+        board2.size,
+        player2.guess,
+        board1.ships,
+        board1.display)
+
 def continue_game(score1, score2):
     """
     Checks both player's score to see if any has scored 5 hits.
@@ -237,7 +259,7 @@ def continue_game(score1, score2):
     if score1 < 5 and score2 < 5:
         keep_playing = input("Do you want to keep playing?\n" + 
         "Enter q to quit or any other key to continue: ")
-        if keep_playing.lower() == "n":
+        if keep_playing.lower() == "q":
             return False
         return True
 
@@ -246,6 +268,7 @@ def continue_game(score1, score2):
 def main():
     """
     The main function, used to execute the program.
+    Keeps running the game until it ends or player chooses to quit.
     """
     new_game()
     player1 = Player("", 0, [], [])
@@ -253,21 +276,14 @@ def main():
     player2 = Player("Computer", 0, [], [])
     board1 = Board(player1.username, 0, [], [])
     board_size = board1.new_board()
-    board2 = Board(player2.username, board_size, [], [])
+    board1.create_board()
     board1.generate_ship_location()
     board1.place_ships_on_board()
+    board2 = Board(player2.username, board_size, [], [])
+    board2.create_board()
     board2.generate_ship_location()
-
+    game_loop(player1, player2, board1, board2)
     while continue_game(player1.score, player2.score):
-        board1.print_board(player1.score)
-        board2.print_board(player2.score)
-        player1.get_player_answer(board_size)
-        player1.check_answer(board_size, player1.guess, board2.ships, board2.display)
-        player2.get_player_answer(board_size)
-        player2.check_answer(board_size, player2.guess, board1.ships, board1.display)
+        game_loop(player1, player2, board1, board2)
     
-# main()
-
-player3 = Player("", 0, [], [])
-player3.new_player()
-print(player3.username)
+main()
