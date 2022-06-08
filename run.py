@@ -1,5 +1,4 @@
 from random import randint
-from pprint import pprint
 
 # https://www.asciiart.eu/vehicles/navy - ascii battleship
 #https://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=Battleships - ascii title
@@ -28,12 +27,16 @@ INTRO = """
 
 
 Welcome to Battleships, the naval strategy game!
+The objective is to sink your opponent's 5 ships.
 The top left corner’s coordinates are (0, 0).
         """
 class Player:
     """
-    Player class. Stores the username and score for each Player object.
-    Has methods for incrementing the Player's score and creating new usernames.
+    Player class. Stores the username, score, current guess
+    and the guesses already made for each Player object.
+    Has methods for incrementing the Player's score, creating new usernames,
+    getting a player guess, validating the guess and confirming
+    wether a guess has already been made and it's outcome.
     """
 
     def __init__(self, username, score, guess, guesses_made):
@@ -86,9 +89,9 @@ class Player:
 
     def validate_player_answer(self, size, response):
         """
-        Checks user input to make sure it's a valid number within the 
-        board size. Returns feedback to the user if they enter something 
-        that's not a number or if the number is not a valid row or 
+        Checks user input to make sure it's a valid number within the
+        board size. Returns feedback to the user if they enter something
+        that's not a number or if the number is not a valid row or
         column within the board.
         """
         
@@ -135,6 +138,11 @@ class Player:
 
 class Board:
     """
+    Board class. Stores the player that owns the board, the board size,
+    the location of the ships and the board's display.
+    Has methods for defining the board size, validating the size,
+    generating the ship positions, creating the board's display,
+    placing the ships on the board and printing the board and player score.
     """
 
     def __init__(self, player, size, ships, display):
@@ -223,17 +231,17 @@ class Board:
 
 def new_game():
     """
-    Runs at the beggining of every new game. 
-    Prints the title, ascii battleship
-    art and gives the player a welcome message. 
-    Executes the new player function. 
+    Runs at the beggining of every new game. Prints the title,
+    ascii battleship art and gives the player a welcome message.
+    Also includes some useful information to help the user. 
     """
     print(INTRO)
 
 def game_loop(player1, player2, board1, board2):
     """
-    Part of the game that must repeat until the game ends or player quits.
-    Prints the two boards, asks the user to input a guess,
+    The part of the game that must repeat until the game ends
+    or the player quits. Prints the two boards,
+    asks the user to input a guess,
     verifies that answer and provides feedback.
     """
     board1.print_board(player1.score)
@@ -256,6 +264,7 @@ def continue_game(player1, player2):
     """
     Checks both player's score to see if any has scored 5 hits.
     Prompts the user to decide wether they wish to continue the game.
+    Alerts the user when the game ends and displays the final scores.
     """
     if player1.score < 5 and player2.score < 5:
         keep_playing = input("Do you want to keep playing?\n" + 
