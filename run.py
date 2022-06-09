@@ -1,8 +1,5 @@
 from random import randint
 
-# https://www.asciiart.eu/vehicles/navy - ascii battleship
-#https://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=Battleships - ascii title
-
 INTRO = """
 
              ____        __  __  __          __    _           
@@ -154,7 +151,7 @@ class Board:
     def new_board(self):
         """
         Prompts the user to enter the size of the board and then
-        generates the board based on the user response. 
+        stores the board size based on the user response.
         Board size must be between 5-8 spaces per row/column.
         """
         while True:
