@@ -22,7 +22,6 @@ INTRO = """
 |                                                                   BB-61/
  \_______________________________________________________________________|
 
-
 Welcome to Battleships, the naval strategy game!
 The objective is to sink your opponent's 5 ships.
 The top left corner’s coordinates are (0, 0).
@@ -33,7 +32,7 @@ class Player:
     and the guesses already made for each Player object.
     Has methods for incrementing the Player's score, creating new usernames,
     getting a player guess, validating the guess and confirming
-    wether a guess has already been made and it's outcome.
+    whether a guess has already been made and its outcome.
     """
 
     def __init__(self, username, score, guess, guesses_made):
@@ -105,9 +104,9 @@ class Player:
 
     def check_answer(self, size, guess, ships, display):
         """
-        Checks to see if the guess enterred has already been made before,
+        Checks to see if the guess entered has already been made before,
         if so calls the get_player_answer function again until a new guess
-        has been enterred. Checks the board to see if the row and column
+        has been entered. Checks the board to see if the row and column
         provided correspond to a ship location or an empty position(water).
         Returns feedback to the player to advise if the input provided is a
         hit or a miss. Alters the opponent's display to reflect the result.
@@ -228,7 +227,7 @@ class Board:
 
 def new_game():
     """
-    Runs at the beggining of every new game. Prints the title,
+    Runs at the beginning of every new game. Prints the title,
     ascii battleship art and gives the player a welcome message.
     Also includes some useful information to help the user. 
     """
@@ -258,8 +257,8 @@ def game_loop(player1, player2, board1, board2):
 
 def continue_game(player1, player2):
     """
-    Checks both player's score to see if any has scored 5 hits.
-    Prompts the user to decide wether they wish to continue the game.
+    Checks both players’ score to see if any has scored 5 hits.
+    Prompts the user to decide whether they wish to continue the game.
     Alerts the user when the game ends and displays the final scores.
     """
     if player1.score < 5 and player2.score < 5:
