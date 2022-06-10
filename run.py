@@ -243,7 +243,6 @@ def game_loop(player1, player2, board1, board2):
     """
     board1.print_board(player1.score)
     board2.print_board(player2.score)
-    print(board2.ships)
     player1.get_player_answer(board1.size)
     player1.check_answer(
         board1.size,
