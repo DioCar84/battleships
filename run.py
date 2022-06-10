@@ -54,10 +54,10 @@ class Player:
         Prompts the player to enter a username and returns it.
         Has validation method to ensure the name is not blank.
         """
-        username = input("Please enter your username: ")
+        username = input("Please enter your username: \n")
         while username.isspace() or not username:
             print("Username cannot be blank, please choose a valid option!\n")
-            username = input("Please enter your username: ")
+            username = input("Please enter your username: \n")
 
         self.username = username
 
@@ -165,7 +165,7 @@ class Board:
         while True:
             board_size = input(
                                 "Please enter the number of rows/columns " +
-                                "for the boards(Must be between 5 and 8): "
+                                "for the boards(Must be between 5 and 8): \n"
                         )
             if self.validate_board_size(board_size):
                 print(f"You have chosen a board size of {board_size}")
@@ -281,7 +281,7 @@ def continue_game(player1, player2):
     if player1.score < 5 and player2.score < 5:
         keep_playing = input(
                             "\nDo you want to keep playing?\n" +
-                            "Enter q to quit or any other key to continue: "
+                            "Enter q to quit or any other key to continue: \n"
                         )
         if keep_playing.lower() == "q":
             return False
