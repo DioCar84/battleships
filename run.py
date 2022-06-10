@@ -284,6 +284,12 @@ def continue_game(player1, player2):
                             "Enter q to quit or any other key to continue: \n"
                         )
         if keep_playing.lower() == "q":
+            print(f"""
+The game has ended. The final score is:
+{player1.username} sank {player1.score } ship(s).
+{player2.username} sank {player2.score } ship(s).
+Thanks for playing!
+        """)
             return False
         return True
     print(f"""
