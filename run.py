@@ -2,14 +2,14 @@ from random import randint
 
 INTRO = """
 
-             ____        __  __  __          __    _           
+             ____        __  __  __          __    _
             / __ )____ _/ /_/ /_/ /__  _____/ /_  (_)___  _____
            / __  / __ `/ __/ __/ / _ \/ ___/ __ \/ / __ \/ ___/
-          / /_/ / /_/ / /_/ /_/ /  __(__  ) / / / / /_/ (__  ) 
-         /_____/\__,_/\__/\__/_/\___/____/_/ /_/_/ .___/____/  
-                                                /_/    
-                                       
-                                               
+          / /_/ / /_/ / /_/ /_/ /  __(__  ) / / / / /_/ (__  )
+         /_____/\__,_/\__/\__/_/\___/____/_/ /_/_/ .___/____/
+                                                /_/
+
+
                                         |__
                                      |\/
                                      ---
@@ -26,6 +26,8 @@ Welcome to Battleships, the naval strategy game!
 The objective is to sink your opponent's 5 ships.
 The top left corner’s coordinates are (0, 0).
         """
+
+
 class Player:
     """
     Player class. Stores the username, score, current guess
@@ -56,14 +58,14 @@ class Player:
         while username.isspace() or not username:
             print("Username cannot be blank, please choose a valid option!\n")
             username = input("Please enter your username: ")
-        
+
         self.username = username
 
     def get_player_answer(self, size):
         """
         Checks to see if it's the user or the PC guessing.
         Creates a random set of coordinates as the computer's guess.
-        Prompts user to input a row/column pair and stores the response. 
+        Prompts user to input a row/column pair and stores the response.
         """
 
         if self.username == "Computer":
@@ -90,14 +92,18 @@ class Player:
         that's not a number or if the number is not a valid row or
         column within the board.
         """
-        
+
         try:
             response = int(response)
             if response < 0 or response > size - 1:
                 print(f"Please enter a number between 0 and {size - 1}!")
                 return False
+
         except:
-            print("Invalid entry: You must enter a whole number. Please try again!")
+            print(
+                "Invalid entry: You must enter a whole number." +
+                "Please try again!"
+            )
             return False
 
         return True
@@ -114,8 +120,10 @@ class Player:
 
         if guess in self.guesses_made:
             if self.username != "Computer":
-                print("You have already tried those coordinates," +
-                    " please choose new ones!")
+                print(
+                    "You have already tried those coordinates," +
+                    " please choose new ones!"
+                )
             new_guess = self.get_player_answer(size)
             self.check_answer(size, new_guess, ships, display)
         else:
@@ -131,6 +139,7 @@ class Player:
             display[guess[0]][guess[1]] = "o  "
             print(f"{self.username} guessed: ({x}, {y})")
             print(f"{self.username} hits the water...\n")
+
 
 class Board:
     """
@@ -154,8 +163,10 @@ class Board:
         Board size must be between 5-8 spaces per row/column.
         """
         while True:
-            board_size = input("Please enter the number of rows/columns " +  
-                            "for the boards(Must be between 5 and 8): ")
+            board_size = input(
+                                "Please enter the number of rows/columns " +
+                                "for the boards(Must be between 5 and 8): "
+                        )
             if self.validate_board_size(board_size):
                 print(f"You have chosen a board size of {board_size}")
                 break
@@ -175,7 +186,10 @@ class Board:
                 print("Please enter a number between 5 and 8")
                 return False
         except:
-            print("Invalid entry: You must enter a whole number. Please try again!")
+            print(
+                "Invalid entry: You must enter a whole number." +
+                "Please try again!"
+            )
             return False
 
         return True
@@ -183,15 +197,15 @@ class Board:
     def generate_ship_location(self):
         """
         Randomly generates location for 5 ships based on the size of the board.
-        Stores the ship locations in a Set to ensure there are 
-        no duplicate locations. Finally, converts to set into a list 
+        Stores the ship locations in a Set to ensure there are
+        no duplicate locations. Finally, converts to set into a list
         for easier access to the elements.
         """
         ship_pos = set()
         while len(ship_pos) < 5:
             nums = (randint(0, self.size - 1), randint(0, self.size - 1))
             ship_pos.add(nums)
-        
+
         ship_pos_list = list(ship_pos)
 
         self.ships = ship_pos_list
@@ -223,15 +237,17 @@ class Board:
         print("********************")
         for row in self.display:
             print(*row)
-        print("********************")    
+        print("********************")
+
 
 def new_game():
     """
     Runs at the beginning of every new game. Prints the title,
     ascii battleship art and gives the player a welcome message.
-    Also includes some useful information to help the user. 
+    Also includes some useful information to help the user.
     """
     print(INTRO)
+
 
 def game_loop(player1, player2, board1, board2):
     """
@@ -255,6 +271,7 @@ def game_loop(player1, player2, board1, board2):
         board1.ships,
         board1.display)
 
+
 def continue_game(player1, player2):
     """
     Checks both players’ score to see if any has scored 5 hits.
@@ -262,8 +279,10 @@ def continue_game(player1, player2):
     Alerts the user when the game ends and displays the final scores.
     """
     if player1.score < 5 and player2.score < 5:
-        keep_playing = input("\nDo you want to keep playing?\n" + 
-        "Enter q to quit or any other key to continue: ")
+        keep_playing = input(
+                            "\nDo you want to keep playing?\n" +
+                            "Enter q to quit or any other key to continue: "
+                        )
         if keep_playing.lower() == "q":
             return False
         return True
@@ -274,6 +293,7 @@ The game has ended. The final score is:
 Thanks for playing!
         """)
     return False
+
 
 def main():
     """
@@ -295,5 +315,6 @@ def main():
     game_loop(player1, player2, board1, board2)
     while continue_game(player1, player2):
         game_loop(player1, player2, board1, board2)
-    
+
+
 main()
