@@ -74,7 +74,7 @@ class Player:
             self.guess = response
         else:
             while True:
-                row = input("Please choose a Row:\n")
+                row = input("\nPlease choose a Row:\n")
                 if self.validate_player_answer(size, row):
                     column = input("Please choose a Column:\n")
                     if self.validate_player_answer(size, column):
@@ -123,8 +123,8 @@ class Player:
             self.guesses_made.append(guess)
             for x, y in ships:
                 if guess == [x, y]:
-                    print(f"{self.username} guessed: ({x}, {y})")
-                    print(f"{self.username} scores a direct hit!!!\n")
+                    print(f"\n{self.username} guessed: ({x}, {y})")
+                    print(f"{self.username} scores a direct hit!!!")
                     display[x][y] = "x  "
                     self.increment_score()
                     return True
@@ -264,7 +264,7 @@ def continue_game(player1, player2):
     Alerts the user when the game ends and displays the final scores.
     """
     if player1.score < 5 and player2.score < 5:
-        keep_playing = input("Do you want to keep playing?\n" + 
+        keep_playing = input("\nDo you want to keep playing?\n" + 
         "Enter q to quit or any other key to continue: ")
         if keep_playing.lower() == "q":
             return False
