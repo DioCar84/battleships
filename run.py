@@ -165,7 +165,7 @@ class Board:
         while True:
             board_size = input(
                                 "Please enter the number of rows/columns " +
-                                "for the boards(Must be between 5 and 8): \n"
+                                "for the boards(Must be between 5 and 8):\n"
                         )
             if self.validate_board_size(board_size):
                 print(f"You have chosen a board size of {board_size}")
