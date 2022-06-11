@@ -75,9 +75,9 @@ class Player:
             self.guess = response
         else:
             while True:
-                row = input("\nPlease choose a Row:\n")
+                row = input("\nPlease choose a Row: \n")
                 if self.validate_player_answer(size, row):
-                    column = input("Please choose a Column:\n")
+                    column = input("Please choose a Column: \n")
                     if self.validate_player_answer(size, column):
                         break
             response = [int(row), int(column)]

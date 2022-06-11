@@ -4,7 +4,7 @@ Battleships is a Python terminal game, which runs in the Code Institue mock term
 
 Users can try to beat the computer by finding all of the computer's battleships before the computer can find theirs. Each battleship occupies one square on the board.
 
-[Click here for the live version of this project]()
+[Click here for the live version of this project](https://battleships-diogo.herokuapp.com/)
 
 ## How to play
 
@@ -12,7 +12,7 @@ Battleships is a turn-based naval strategy game based on the classic pen-and-pap
 
 In this version of the game, the player is able to create a username and choose a board size between 5 and 8 rows and columns. The boards are then generated and the ship positions randomly chosen.
 
-The user is able to see their ships on the board, indicated by the "@" symbol. The computer's ships are hidden to provide the challenge. Spaces are indicated with a "-" symbol, incorrect guesses are marked with a "o" and direct hits will be marked with a "x".
+The user is able to see their ships on the board, indicated by the `@` symbol. The computer's ships are hidden to provide the challenge. Spaces are indicated with a `-` symbol, incorrect guesses are marked with a `o` and direct hits will be marked with a `x`.
 
 The player and the computer will take turns attempting to guess where their opponent's ship is to try and sink all of them. The winner is the first to sink their opponent's five ships.
 
@@ -23,9 +23,13 @@ The player and the computer will take turns attempting to guess where their oppo
 - User defined board size
     - The player chooses between 5 to 8 rows and columns per board
 - Randomly generated ship locations that can change each game
+
+
 - Computer opponent that tries to defeat the user
 - Accepts user input
 - Maintains score and displays the outcome of the previous guesses
+
+
 - Input validation and error-checking
     - Username cannot be blank
     - User cannot input coordinates outside of the board size
@@ -38,6 +42,7 @@ The player and the computer will take turns attempting to guess where their oppo
 - Allow the player to choose their ships' position
 - Create ships that vary in size
 - Allow for two users to play the game
+- Change coordinates from 0 indexing for better user experience
 
 ## Data Model
 
@@ -81,5 +86,5 @@ This project was deployed using Code Institute's mock terminal for Heroku.
 - [Code Institute](https://codeinstitute.net/) for the deployment terminal and also a big part of this Read Me file
 - [Ascii Art](https://www.asciiart.eu/vehicles/navy) for the Battleship ascii art
 - [Pator JK](https://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=Battleships) for the ascii title
-- [Stack Overflow](https://stackoverflow.com/) for countless doubts and questions I had
+- [Stack Overflow](https://stackoverflow.com/) for the countless doubts and questions I had
 - [Wikipedia](https://en.wikipedia.org/wiki/Battleship_(game)) for the rules and history of the Battleships game
