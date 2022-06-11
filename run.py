@@ -69,9 +69,9 @@ class Player:
         """
 
         if self.username == "Computer":
-            row = randint(0, size - 1)
-            column = randint(0, size - 1)
-            response = [row, column]
+            row1 = randint(0, size - 1)
+            column1 = randint(0, size - 1)
+            response = [row1, column1]
             self.guess = response
         else:
             while True:
@@ -79,9 +79,9 @@ class Player:
                 if self.validate_player_answer(size, row):
                     column = input("Please choose a Column: \n")
                     if self.validate_player_answer(size, column):
+                        response = [int(row), int(column)]
+                        self.guess = response
                         break
-            response = [int(row), int(column)]
-            self.guess = response
 
         return response
 

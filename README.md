@@ -6,6 +6,8 @@ Users can try to beat the computer by finding all of the computer's battleships 
 
 [Click here for the live version of this project](https://battleships-diogo.herokuapp.com/)
 
+![Responsice Mockup](/assets/images/responsive-project3.png)
+
 ## How to play
 
 Battleships is a turn-based naval strategy game based on the classic pen-and-paper game. You read all about it's history and evolution over the years on it's [Wikipedia Page](https://en.wikipedia.org/wiki/Battleship_(game)).
