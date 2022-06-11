@@ -25,6 +25,7 @@ INTRO = """
 Welcome to Battleships, the naval strategy game!
 The objective is to sink your opponent's 5 ships.
 The top left corner’s coordinates are (0, 0).
+Your username cannot be blank or Computer!
         """
 
 
@@ -54,8 +55,8 @@ class Player:
         Has validation method to ensure the name is not blank.
         """
         username = input("Please enter your username: \n")
-        while username.isspace() or not username:
-            print("Username cannot be blank, please choose a valid option!\n")
+        while username.isspace() or not username or username == "Computer":
+            print("Username cannot be blank or Computer, please choose a valid option!\n")
             username = input("Please enter your username: \n")
 
         self.username = username
