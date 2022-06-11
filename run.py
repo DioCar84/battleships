@@ -30,17 +30,16 @@ The top left corner’s coordinates are (0, 0).
 
 class Player:
     """
-    Player class. Stores the username, score, current guess
+    Player class. Stores the username, score,
     and the guesses already made for each Player object.
     Has methods for incrementing the Player's score, creating new usernames,
     getting a player guess, validating the guess and confirming
     whether a guess has already been made and its outcome.
     """
 
-    def __init__(self, username, score, guess, guesses_made):
+    def __init__(self, username, score, guesses_made):
         self.username = username
         self.score = score
-        self.guess = guess
         self.guesses_made = guesses_made
 
     def increment_score(self):
@@ -61,7 +60,7 @@ class Player:
 
         self.username = username
 
-    def get_player_answer(self, size):
+    def get_player_answer(self, size, ships, display):
         """
         Checks to see if it's the user or the PC guessing.
         Creates a random set of coordinates as the computer's guess.
@@ -71,19 +70,21 @@ class Player:
         if self.username == "Computer":
             row1 = randint(0, size - 1)
             column1 = randint(0, size - 1)
-            response = [row1, column1]
-            self.guess = response
+            self.check_answer(size, [row1, column1], ships, display)
+            self.guesses_made.append([row1, column1])
+            self.display_result(ships, display)
         else:
             while True:
                 row = input("\nPlease choose a Row: \n")
                 if self.validate_player_answer(size, row):
                     column = input("Please choose a Column: \n")
                     if self.validate_player_answer(size, column):
-                        response = [int(row), int(column)]
-                        self.guess = response
+                        self.check_answer(size, [int(row), int(column)], ships, display)
+                        self.guesses_made.append([int(row), int(column)])
+                        self.display_result(ships, display)
                         break
 
-        return response
+        return self.guesses_made[-1]
 
     def validate_player_answer(self, size, response):
         """
@@ -108,37 +109,45 @@ class Player:
 
         return True
 
-    def check_answer(self, size, guess, ships, display):
+    def check_answer(self, size, response, ships, display):
         """
         Checks to see if the guess entered has already been made before,
         if so calls the get_player_answer function again until a new guess
-        has been entered. Checks the board to see if the row and column
-        provided correspond to a ship location or an empty position(water).
-        Returns feedback to the player to advise if the input provided is a
-        hit or a miss. Alters the opponent's display to reflect the result.
+        has been entered. 
         """
 
-        if guess in self.guesses_made:
+        if response in self.guesses_made:
             if self.username != "Computer":
                 print(
                     "You have already tried those coordinates," +
                     " please choose new ones!"
                 )
-            new_guess = self.get_player_answer(size)
+            new_guess = self.get_player_answer(size, ships, display)
             self.check_answer(size, new_guess, ships, display)
-        else:
-            self.guesses_made.append(guess)
-            for x, y in ships:
-                if guess == [x, y]:
-                    print(f"\n{self.username} guessed: ({x}, {y})")
-                    print(f"{self.username} scores a direct hit!!!")
-                    display[x][y] = "x  "
-                    self.increment_score()
-                    return True
 
-            display[guess[0]][guess[1]] = "o  "
-            print(f"{self.username} guessed: ({x}, {y})")
-            print(f"{self.username} hits the water...\n")
+    def display_result(self, ships, display):
+        """
+        Checks the board to see if the row and column
+        provided correspond to a ship location or an empty position(water).
+        Returns feedback to the player to advise if the input provided is a
+        hit or a miss. Alters the opponent's display to reflect the result.
+        """
+        for x, y in ships:
+            if self.guesses_made[-1] == [x, y]:
+                print(
+                    f"\n{self.username} guessed: ({self.guesses_made[-1][0]}," + 
+                    f"{self.guesses_made[-1][1]})"
+                )
+                print(f"{self.username} scores a direct hit!!!")
+                display[x][y] = "x  "
+                self.increment_score()
+                return True
+
+        display[self.guesses_made[-1][0]][self.guesses_made[-1][1]] = "o  "
+        print(
+            f"{self.username} guessed: ({self.guesses_made[-1][0]}," +
+            f"{self.guesses_made[-1][1]})")
+        print(f"{self.username} hits the water...\n")
 
 
 class Board:
@@ -258,18 +267,8 @@ def game_loop(player1, player2, board1, board2):
     """
     board1.print_board(player1.score)
     board2.print_board(player2.score)
-    player1.get_player_answer(board1.size)
-    player1.check_answer(
-        board1.size,
-        player1.guess,
-        board2.ships,
-        board2.display)
-    player2.get_player_answer(board2.size)
-    player2.check_answer(
-        board2.size,
-        player2.guess,
-        board1.ships,
-        board1.display)
+    player1.get_player_answer(board1.size, board2.ships, board2.display)
+    player2.get_player_answer(board2.size, board1.ships, board1.display)
 
 
 def continue_game(player1, player2):
@@ -307,9 +306,9 @@ def main():
     Keeps running the game until it ends or player chooses to quit.
     """
     new_game()
-    player1 = Player("", 0, [], [])
+    player1 = Player("", 0, [])
     player1.new_player()
-    player2 = Player("Computer", 0, [], [])
+    player2 = Player("Computer", 0, [])
     board1 = Board(player1.username, 0, [], [])
     board_size = board1.new_board()
     board1.create_board()
