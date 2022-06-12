@@ -90,9 +90,16 @@ I have manually tested this project by doing the following:
 
   - The `display_result` function was returning feedback for a guess that the player had not entered. I fixed this by accessing the correct data structure, as I was originally accessing the ship position array instead of the guesses made array.
 
+  - The `check_answer` function was creating an infinite guessing loop if the player had already entered the chosen coordinates. I fixed this by adding a return `True` or return `False` condition to stop looping if the new coordinates have not been previously guessed.
+
 #### Remaining Bugs
 
+  - No bugs remaining
+
 #### Validator Testing
+
+  - PEP8
+    - No errors were returned from PEP8online.com
 
 ## Deployment
 
