@@ -72,23 +72,32 @@ class Player:
         """
 
         if self.username == "Computer":
-            row1 = randint(0, size - 1)
-            column1 = randint(0, size - 1)
-            self.check_answer(size, [row1, column1], ships, display)
-            self.guesses_made.append([row1, column1])
-            self.display_result(ships, display)
+            while True:
+                row1 = randint(0, size - 1)
+                column1 = randint(0, size - 1)
+                if self.check_answer(
+                    size,
+                    [row1, column1],
+                    ships,
+                    display
+                ):
+                    continue
+                self.guesses_made.append([row1, column1])
+                self.display_result(ships, display)
+                break
         else:
             while True:
                 row = input("\nPlease choose a Row: \n")
                 if self.validate_player_answer(size, row):
                     column = input("Please choose a Column: \n")
                     if self.validate_player_answer(size, column):
-                        self.check_answer(
+                        if self.check_answer(
                             size,
                             [int(row), int(column)],
                             ships,
                             display
-                        )
+                        ):
+                            continue
                         self.guesses_made.append([int(row), int(column)])
                         self.display_result(ships, display)
                         break
@@ -131,8 +140,9 @@ class Player:
                     "You have already tried those coordinates," +
                     " please choose new ones!"
                 )
-            new_guess = self.get_player_answer(size, ships, display)
-            self.check_answer(size, new_guess, ships, display)
+            return True
+
+        return False
 
     def display_result(self, ships, display):
         """

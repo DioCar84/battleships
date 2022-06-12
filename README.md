@@ -43,19 +43,17 @@ The player and the computer will take turns attempting to guess where their oppo
 
 - Input validation and error-checking
     - Username cannot be blank or Computer
-
-    ![Username Validation](/assets/images/Username%20validation.png)
-
     - User cannot input coordinates outside of the board size
     - User cannot input characters, symbols or decimal numbers
-
-    ![Guess Validation 1](/assets/images/Guess%20validation%201.png)
-
     - User cannot enter the same coordinates twice
 
-    ![Guess Validation 2](/assets/images/Guess%20validation%202.png)
+![Username Validation](/assets/images/Username%20validation.png)
 
-- Data maintained in class instances
+![Guess Validation 1](/assets/images/Guess%20validation%201.png)
+
+![Guess Validation 2](/assets/images/Guess%20validation%202.png)
+
+- Data maintained in class instances(Player and Board)
 
 ### Future Features
 
@@ -83,11 +81,14 @@ I have manually tested this project by doing the following:
   - Passed the code through a PEP8 linter and confirmed there are no issues
   - Passed invalid inputs: decimal point numbers, chars, symbols and strings where only whole numbers are allowed.
   - Passed inputs that are outside of the board size and input the same coordinates more than once.
+  - Passed inputs that are blank or "Computer" as a username.
   - Tested the game in both the Code Institue Heroku terminal and my local Gitpod terminal
 
 ### Bugs
 
 #### Solved Bugs
+
+  - The `display_result` function was returning feedback for a guess that the player had not entered. I fixed this by accessing the correct data structure, as I was originally accessing the ship position array instead of the guesses made array.
 
 #### Remaining Bugs
 
