@@ -22,21 +22,39 @@ The player and the computer will take turns attempting to guess where their oppo
 
 ### Implemented Features
 
+- Intro with ASCII art and useful information
+
+![Game Intro](/assets/images/Battleships%20intro.png)
+
 - User defined board size
     - The player chooses between 5 to 8 rows and columns per board
 - Randomly generated ship locations that can change each game
 
+![Battle Boards](/assets/images/Battleships%20boards.png)
 
 - Computer opponent that tries to defeat the user
-- Accepts user input
+- Accepts user input and returns feedback
+
+![Input Feedback](/assets/images/Input%20feedback.png)
+
 - Maintains score and displays the outcome of the previous guesses
 
+![Updated Boards](/assets/images/Updated%20boards.png)
 
 - Input validation and error-checking
-    - Username cannot be blank
+    - Username cannot be blank or Computer
+
+    ![Username Validation](/assets/images/Username%20validation.png)
+
     - User cannot input coordinates outside of the board size
     - User cannot input characters, symbols or decimal numbers
+
+    ![Guess Validation 1](/assets/images/Guess%20validation%201.png)
+
     - User cannot enter the same coordinates twice
+
+    ![Guess Validation 2](/assets/images/Guess%20validation%202.png)
+
 - Data maintained in class instances
 
 ### Future Features
@@ -45,10 +63,13 @@ The player and the computer will take turns attempting to guess where their oppo
 - Create ships that vary in size
 - Allow for two users to play the game
 - Change coordinates from 0 indexing for better user experience
+- Allow the user to choose "Computer" as a username
 
 ## Data Model
 
-For this project I have decided to create a Player class and a Board class as my models. The game creates two instances of the Player class, one for the user and one for the computer. This class stores the username, score, current guess and the guesses already made.
+For this project I have decided to create a Player class and a Board class as my models. 
+
+The game creates two instances of the Player class, one for the user and one for the computer. This class stores the username, score, current guess and the guesses already made.
 
 The Player class has methods such as the `new_player` method which stores the username chosen. The `get_player_answer` method which stores the players guess and checks if it's a valid response and the `check_answer` method that provides feedback to the player based on their guess.
 
@@ -85,8 +106,8 @@ This project was deployed using Code Institute's mock terminal for Heroku.
 
 ## Credits
 
-- [Code Institute](https://codeinstitute.net/) for the deployment terminal and also a big part of this Read Me file
-- [Ascii Art](https://www.asciiart.eu/vehicles/navy) for the Battleship ascii art
-- [Pator JK](https://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=Battleships) for the ascii title
+- [Code Institute](https://codeinstitute.net/) for the deployment terminal, a big part of this Read Me file and the code for the `create_board` function
+- [Ascii Art](https://www.asciiart.eu/vehicles/navy) for the Battleship ASCII art
+- [Pator JK](https://patorjk.com/software/taag/#p=display&v=0&f=Slant&t=Battleships) for the ASCII title
 - [Stack Overflow](https://stackoverflow.com/) for the countless doubts and questions I had
 - [Wikipedia](https://en.wikipedia.org/wiki/Battleship_(game)) for the rules and history of the Battleships game
