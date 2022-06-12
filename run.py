@@ -34,8 +34,8 @@ class Player:
     Player class. Stores the username, score,
     and the guesses already made for each Player object.
     Has methods for incrementing the Player's score, creating new usernames,
-    getting a player guess, validating the guess and confirming
-    whether a guess has already been made and its outcome.
+    getting a player guess, validating the guess, confirming
+    whether a guess has already been made and displaying its outcome.
     """
 
     def __init__(self, username, score, guesses_made):
@@ -56,7 +56,10 @@ class Player:
         """
         username = input("Please enter your username: \n")
         while username.isspace() or not username or username == "Computer":
-            print("Username cannot be blank or Computer, please choose a valid option!\n")
+            print(
+                "Username cannot be blank or Computer," +
+                "please choose a valid option!\n"
+            )
             username = input("Please enter your username: \n")
 
         self.username = username
@@ -80,7 +83,12 @@ class Player:
                 if self.validate_player_answer(size, row):
                     column = input("Please choose a Column: \n")
                     if self.validate_player_answer(size, column):
-                        self.check_answer(size, [int(row), int(column)], ships, display)
+                        self.check_answer(
+                            size,
+                            [int(row), int(column)],
+                            ships,
+                            display
+                        )
                         self.guesses_made.append([int(row), int(column)])
                         self.display_result(ships, display)
                         break
@@ -114,7 +122,7 @@ class Player:
         """
         Checks to see if the guess entered has already been made before,
         if so calls the get_player_answer function again until a new guess
-        has been entered. 
+        has been entered.
         """
 
         if response in self.guesses_made:
@@ -136,8 +144,8 @@ class Player:
         for x, y in ships:
             if self.guesses_made[-1] == [x, y]:
                 print(
-                    f"\n{self.username} guessed: ({self.guesses_made[-1][0]}," + 
-                    f"{self.guesses_made[-1][1]})"
+                    f"\n{self.username} guessed: ({self.guesses_made[-1][0]}" +
+                    f",{self.guesses_made[-1][1]})"
                 )
                 print(f"{self.username} scores a direct hit!!!")
                 display[x][y] = "x  "
@@ -147,7 +155,8 @@ class Player:
         display[self.guesses_made[-1][0]][self.guesses_made[-1][1]] = "o  "
         print(
             f"{self.username} guessed: ({self.guesses_made[-1][0]}," +
-            f"{self.guesses_made[-1][1]})")
+            f"{self.guesses_made[-1][1]})"
+        )
         print(f"{self.username} hits the water...\n")
 
 
@@ -225,6 +234,8 @@ class Board:
         Generates the battleships board based on size provided.
         Creates a 2D matrix with equal size columns and rows.
         Stores the board elements in a list of lists.
+        This code is a slight adaptation from the version used by
+        Code Institute in the Portfolio Project 3 Scope.
         """
         board = [["-  " for x in range(self.size)] for y in range(self.size)]
 
