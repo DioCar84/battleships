@@ -1,18 +1,18 @@
 # Battleships
 
-Battleships is a Python terminal game, which runs in the Code Institue mock terminal on Heroku.
+Battleships is a Python terminal game, which runs in the Code Institute mock terminal on Heroku.
 
 Users can try to beat the computer by finding all of the computer's battleships before the computer can find theirs. Each battleship occupies one square on the board.
 
 [Click here for the live version of this project](https://battleships-diogo.herokuapp.com/)
 
-![Responsice Mockup](/assets/images/responsive-project3.png)
+![Responsive Mock-up](/assets/images/responsive-project3.png)
 
 ## How to play
 
-Battleships is a turn-based naval strategy game based on the classic pen-and-paper game. You read all about it's history and evolution over the years on it's [Wikipedia Page](https://en.wikipedia.org/wiki/Battleship_(game)).
+Battleships is a turn-based naval strategy game based on the classic pen-and-paper game. You read all about its history and evolution over the years on its [Wikipedia Page](https://en.wikipedia.org/wiki/Battleship_(game)).
 
-In this version of the game, the player is able to create a username and choose a board size between 5 and 8 rows and columns. The boards are then generated and the ship positions randomly chosen.
+In this version of the game, the player is able to create a username and choose a board size between 5 and 8 rows and columns. The boards are then generated, and the ship positions randomly chosen.
 
 The user is able to see their ships on the board, indicated by the `@` symbol. The computer's ships are hidden to provide the challenge. Spaces are indicated with a `-` symbol, incorrect guesses are marked with a `o` and direct hits will be marked with a `x`.
 
@@ -82,7 +82,7 @@ I have manually tested this project by doing the following:
   - Passed invalid inputs: decimal point numbers, chars, symbols and strings where only whole numbers are allowed.
   - Passed inputs that are outside of the board size and input the same coordinates more than once.
   - Passed inputs that are blank or "Computer" as a username.
-  - Tested the game in both the Code Institue Heroku terminal and my local Gitpod terminal
+  - Tested the game in both the Code Institute Heroku terminal and my local Gitpod terminal
 
 ### Bugs
 
